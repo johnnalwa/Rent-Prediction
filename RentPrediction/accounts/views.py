@@ -2,6 +2,12 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from .forms import userForm, UserLoginForm
+# prediction/views.py
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+import pandas as pd
+from sklearn.externals import joblib
+
 
 def register(request):
     if request.method == 'POST':
@@ -40,3 +46,31 @@ def login_view(request):
 
 def home(request):
     return render(request, 'home.html')
+
+
+# Load the trained model
+model = joblib.load(
+mode
+'/house_price_prediction')
+
+@csrf_exempt
+def predict_rent(request):
+    if request.method == 'POST':
+        try:
+            # Extract input data from request
+            data = json.loads(request.body)
+            
+# Preprocess input data
+            preprocessed_data = preprocess_data(data)
+            
+# Make prediction using the model
+            prediction = model.predict(preprocessed_data)
+            
+# Return the prediction as JSON response
+            return JsonResponse({'prediction': prediction.tolist()})
+        except ValidationError as e:
+            return JsonResponse({'error': str(e)}, status=400)
+        except Exception as e:
+            return JsonResponse({'error': 'An error occurred while processing the request'}, status=500)
+    else:
+        return JsonResponse({'error': 'Only POST requests are allowed'}, status=405)
