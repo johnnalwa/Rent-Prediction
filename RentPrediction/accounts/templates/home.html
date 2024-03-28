@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <header>Explore Average Prices in Kenya</header>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #9e9999;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #3498db;
+            color: #fff;
+            text-align: center;
+            padding: 2em;
+        }
+        h1 {
+            text-align: center;
+        }
+        form {
+            max-width: 500px;
+            margin: 40px auto;
+            padding: 60px;
+            background-color: #858284;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+        select, button {
+            width:100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            width:40%;
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 18px;
+        }
+        button:hover {
+            background-color: #41bb88;
+        }
+        /* Notification style */
+        .notification {
+            position: fixed;
+            top: 30%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(to right, #05d84b, #08d363);
+            color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            display: none;
+            z-index: 9999;
+            width: 300px;
+            max-width: 80%;
+            text-align: center;
+            font-size: 16px;
+            line-height: 2.6;
+        }
+    </style>
+</head>
+<body>
+    <h1>Rent Prediction</h1>
+    <form id="rentPredictionForm">
+        <label for="houseType">House Type:</label>
+        <select id="houseType" name="houseType">
+            <option value="singleRoom">Single Room</option>
+            <option value="bedsitter">Bedsitter</option>
+            <option value="oneBedroom">1 Bedroom</option>
+            <option value="twoBedroom">2 Bedroom</option>
+        </select>
+
+        <label for="location">Location:</label>
+        <select id="location" name="location">
+            <option value="Nakuru">Nakuru</option>
+            <option value="Nairobi">Nairobi</option>
+            <option value="Eldoret">Eldoret</option>
+        </select>
+
+        <button type="button" onclick="predictRent()">Predict</button>
+        <a href="homedrop.html"><button type="button">Back</button></a>
+    </form>
+
+    <!-- Notification element -->
+    <div id="notification" class="notification"></div>
+
+    <script>
+        function predictRent() {
+            var houseType = document.getElementById("houseType").value;
+            var location = document.getElementById("location").value;
+            var rentPrediction = "";
+
+            switch (location) {
+                case "Nakuru":
+                    switch (houseType) {
+                        case "singleRoom":
+                            rentPrediction = "Rent for Single Room in Nakuru is between Ksh. 3000 and Ksh. 5000.";
+                            break;
+                        case "bedsitter":
+                            rentPrediction = "Rent for Bedsitter in Nakuru is between Ksh. 5000 and Ksh. 6000.";
+                            break;
+                        case "oneBedroom":
+                            rentPrediction = "Rent for 1 Bedroom in Nakuru is between Ksh. 6000 and Ksh. 9000.";
+                            break;
+                        case "twoBedroom":
+                            rentPrediction = "Rent for 2 Bedroom in Nakuru is between Ksh. 9500 and Ksh. 12000.";
+                            break;
+                        default:
+                            rentPrediction = "Invalid selection.";
+                    }
+                    break;
+                case "Nairobi":
+                    switch (houseType) {
+                        case "singleRoom":
+                            rentPrediction = "Rent for Single Room in Nairobi is between Ksh. 4000 and Ksh. 6000.";
+                            break;
+                        case "bedsitter":
+                            rentPrediction = "Rent for Bedsitter in Nairobi is between Ksh. 7000 and Ksh. 8000.";
+                            break;
+                        case "oneBedroom":
+                            rentPrediction = "Rent for 1 Bedroom in Nairobi is between Ksh. 9000 and Ksh. 12000.";
+                            break;
+                        case "twoBedroom":
+                            rentPrediction = "Rent for 2 Bedroom in Nairobi is between Ksh. 13000 and Ksh. 16000.";
+                            break;
+                        default:
+                            rentPrediction = "Invalid selection.";
+                    }
+                    break;
+                case "Eldoret":
+                    switch (houseType) {
+                        case "singleRoom":
+                            rentPrediction = "Rent for Single Room in Eldoret is between Ksh. 2500 and Ksh. 4500.";
+                            break;
+                        case "bedsitter":
+                            rentPrediction = "Rent for Bedsitter in Eldoret is between Ksh. 4600 and Ksh. 5600.";
+                            break;
+                        case "oneBedroom":
+                            rentPrediction = "Rent for 1 Bedroom in Eldoret is between Ksh. 6500 and Ksh. 8500.";
+                            break;
+                        case "twoBedroom":
+                            rentPrediction = "Rent for 2 Bedroom in Eldoret is between Ksh. 9000 and Ksh. 11000.";
+                            break;
+                        default:
+                            rentPrediction = "Invalid selection.";
+                    }
+                    break;
+                default:
+                    rentPrediction = "Invalid selection.";
+            }
+
+            // Display prediction result
+            var notificationElement = document.getElementById("notification");
+            notificationElement.textContent = rentPrediction;
+            notificationElement.style.display = "block"; // Show the notification
+            setTimeout(function() {
+                notificationElement.style.display = "none"; // Hide the notification after 3 seconds
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

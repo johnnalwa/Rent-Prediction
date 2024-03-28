@@ -1,0 +1,55 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="{% static 'login.css' %}" rel="stylesheet"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - House rent prediction system</title>
+
+    <!-- Include toast CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+</head>
+<body>
+    <header>
+        <h1>HOUSE RENT PREDICTION SYSTEM</h1>
+    </header>
+
+    <main>
+        <h2>Tenant Login</h2>
+        <form method="post">
+            {% csrf_token %}
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+
+            <button type="submit">Login</button>
+        </form>
+
+        <div id="signup">
+            <p>Don't have an account? <a href="{% url 'register' %}">Sign Up</a></p>
+        </div>
+
+        <div id="forgot-password">
+            {% comment %} <p><a href="{% url 'forgot_password' %}">Forgot Password?</a></p> {% endcomment %}
+        </div>
+    </main>
+
+    <!-- Include jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Include toastr JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script>
+        // Function to check if the login success message is present in the URL and display toast
+        $(document).ready(function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const successMessage = urlParams.get('login_success');
+            if (successMessage === 'true') {
+                toastr.success('Login successful!');
+            }
+        });
+    </script>
+</body>
+</html>
