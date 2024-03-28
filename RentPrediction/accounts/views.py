@@ -3,16 +3,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from .forms import userForm, UserLoginForm
-<<<<<<< HEAD
 import joblib
-=======
-# prediction/views.py
-from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
-import pandas as pd
-from sklearn.externals import joblib
-
->>>>>>> ca3ab87130ff1787e8021147461d148ea074034e
 
 def register(request):
     if request.method == 'POST':
@@ -53,7 +44,6 @@ def home(request):
     return render(request, 'home.html')
 
 
-<<<<<<< HEAD
 def predict_rent(request):
     if request.method == 'POST':
         house_type = request.POST.get('houseType')
@@ -102,7 +92,57 @@ def predict_rent_from_model(model, house_type, location):
             return "Rent for 2 Bedroom in Eldoret is between Ksh. 9000 and Ksh. 11000."
     else:
         return "Invalid location selection."
-=======
+
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from django.contrib.auth import authenticate, login
+from .forms import userForm, UserLoginForm
+# prediction/views.py
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+import pandas as pd
+from sklearn.externals import joblib
+
+
+def register(request):
+    if request.method == 'POST':
+        form = userForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Registration successful!')  # Set success message
+            return redirect('login')  # Redirect to the login page after successful registration
+        else:
+            # Report form errors
+            errors = form.errors.as_data()
+            for field, error in errors.items():
+                messages.error(request, f"{field}: {error[0]}")
+    else:
+        form = userForm()
+    return render(request, 'register.html', {'form': form})
+
+
+def login_view(request):
+    if request.method == 'POST':
+        form = UserLoginForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                messages.success(request, 'Login successful!')
+                return redirect('home_page')  # Redirect to the homepage
+            else:
+                messages.error(request, 'Invalid username or password.')
+    else:
+        form = UserLoginForm()
+    return render(request, 'login.html', {'form': form})
+
+
+def home(request):
+    return render(request, 'home.html')
+
+
 # Load the trained model
 model = joblib.load(
 mode
@@ -129,4 +169,3 @@ def predict_rent(request):
             return JsonResponse({'error': 'An error occurred while processing the request'}, status=500)
     else:
         return JsonResponse({'error': 'Only POST requests are allowed'}, status=405)
->>>>>>> ca3ab87130ff1787e8021147461d148ea074034e
