@@ -1,31 +1,27 @@
-# House Rent Prediction
+House Rent Prediction Web Application
+This repository contains the code for a web application that predicts house rent prices.
 
-This repository contains code for a House Rent Prediction web application.
+Running the Application
 
-## Steps to Run the Application
+Prerequisites:
 
-### Step 1: Install Docker
-Download and install Docker Desktop for your operating system from the [official Docker website](https://www.docker.com/products/docker-desktop).
+Docker Desktop installed. Download it from the official Docker website: Docker Desktop: https://www.docker.com/products/docker-desktop.
+Steps:
 
-### Step 2: Clone the Repository
-Clone the House Rent Prediction repository to your local machine:
-```bash
+Clone the Repository:
+
 git clone https://github.com/Anubhav-Goyal01/House-Rent-Prediction.git
+Navigate to Project Directory:
 
-### Step 3: Navigate to the Project Directory
-Navigate to the directory of the cloned House Rent Prediction repository:
-```bash
 cd House-Rent-Prediction
+Build Docker Image:
 
-###Step 4: Build Docker Image
-Build the Docker image using the provided Dockerfile:
-```bash
 docker build -t house-rent-prediction .
+Run Docker Container:
 
-###Step 5: Run Docker Container
-Run the Docker container from the built image:
-```bash
 docker run -p 5000:5000 house-rent-prediction
+This command runs the application and maps the container port (5000) to your local machine port (5000).
 
-###Open a web browser and navigate to http://localhost:5000 to access the House Rent Prediction web app.
+Access the Application:
 
+Open a web browser and navigate to http://localhost:5000 to use the House Rent Prediction web app.
